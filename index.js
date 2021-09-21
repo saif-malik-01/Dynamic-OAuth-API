@@ -13,11 +13,14 @@ const PORT = 3000;
 
 app.use('/v1',register);
 app.use('/v1',dump);
+app.get('/',(req,res)=>{
+    res.redirect('/v1/register');
+})
 
 
-app.listen(PORT,"192.168.0.104",(err)=>{
+app.listen(PORT,(err)=>{
     if (err) console.log(err);
-    console.log(`server running at port ${PORT}`);
+    console.log(`server running at port ${PORT}`)
 })
 
 

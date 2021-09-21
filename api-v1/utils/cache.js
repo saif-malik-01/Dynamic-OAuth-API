@@ -1,14 +1,26 @@
 const redis = require('redis');
 require('dotenv').config();
-const mongoose = require('mongoose');
 const redisUrl = process.env.REDIS_KEY;
 const client = redis.createClient(redisUrl);
+const {promisify} = require('util');
 
-function create(key,data){
-  client.set(key,data,(err,value)=>{
+
+// store refersh token for specific user by there appname and email
+
+ function create(appName,user,data){
+  client.hset(appName,user,JSON.stringify([data]), (err,value)=>{
       if(err) console.log(err);
-      console.log(value);
+      console.log("hset done",data);
+     
   })
 }
 
-module.exports ={create};
+// return refersh token array associate wtih given appName and user email
+
+async function get(appName,user){
+  client.hget = promisify(client.hget);
+  const res = await client.hget(appName,user);
+  return JSON.parse(res);
+}
+
+module.exports ={create,get};

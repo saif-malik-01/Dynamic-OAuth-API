@@ -10,7 +10,7 @@ function get(req, res) {
 }
 
 async function post(req, res) {
-  console.log("sad");
+
     
   if (req.body) {
    try {
@@ -21,9 +21,12 @@ async function post(req, res) {
         const token = jwt.sign(
           { password },
           process.env.ACCESS_TOKEN_SIGNATURE , {expiresIn:'1h'}
-        );
+        ); 
         const refreshToken = jwt.sign({password},process.env.REFRESH_TOKEN_SIGNATURE,{expiresIn:'6h'})
-        cache.create(req.originalUrl.split('/')[2],refreshToken);
+
+        // store refersh token with user's appName and email as a key
+        cache.create(req.originalUrl.split('/')[2],email,refreshToken);
+
         return res.status(200).json({ ACCESS_TOKEN: token,REFRESH_TOKEN: refreshToken });
       } else {
         return res.status(401).json({ code: 401, message: "user not found" });
@@ -31,7 +34,7 @@ async function post(req, res) {
     } catch (error) {
       return res
         .status(401)
-        .json({ code: 401, message: "Could not connect to server" });
+        .json({ code: 401, message: "Could not connect to server",error });
     }
   } else {
     res.status(401).json({ code: 401, required: "All Fields" });

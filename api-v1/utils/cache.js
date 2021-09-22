@@ -23,4 +23,9 @@ async function get(appName,user){
   return JSON.parse(res);
 }
 
-module.exports ={create,get};
+
+async function del(appName,user){
+  await client.hdel(appName,user);
+}
+
+module.exports ={create,get,del};

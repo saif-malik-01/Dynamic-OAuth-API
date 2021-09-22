@@ -1,11 +1,7 @@
-const path = require('path');
 const jwt = require('jsonwebtoken');
 const cache = require('../../utils/cache');
 require('dotenv').config();
 
-function get(req,res) {
-    res.sendFile(path.resolve(__dirname,'./refresh.html'));
-}
 
 async function post(req,res) {
     // check is user send the refresh token or not .
@@ -41,4 +37,4 @@ async function post(req,res) {
     }
 }
 
-module.exports = {post,get};
+module.exports = {post};

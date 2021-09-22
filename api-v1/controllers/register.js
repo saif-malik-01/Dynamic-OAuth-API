@@ -1,29 +1,29 @@
-const path = require('path');
 const user = require('../models/user');
 const bcrypt = require('bcryptjs');
 const {CreateUserRouter} = require('../utils/createUserRouter')
 
-
-function get(req,res){
-  
-    res.sendFile(path.resolve(__dirname,'./index.html'));
-}
+// register user and creates its appName routes and db
 
 async function post(req,res){
-   
-    if(req.body){
+       
+      // validate given data 
       try {
         let {name,appName,email,password} = req.body; 
+
+        // hash password to store in db
         password = await bcrypt.hash(password,4);  
+
+        // create user app routes and registered in it as middleware
         req.app.use('/v1',CreateUserRouter(appName));
+        // create document in mongo collection
         await user.create({name,appName,email,password});  
         return res.status(200).json({code:200});
-       } catch (error) {
-            res.status(401).json({code:401,message:"Could not connect to server",error});
+       } 
+       
+       catch (error) {
+          res.status(401).json({code:401,required:"All Fields",minPass:6,error});
         }
-    }else{
-        res.status(401).json({code:401,required:"All Fields",minPass:6});
-    }
+    
 }
 
-module.exports = {get,post};
+module.exports = {post};

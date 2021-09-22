@@ -4,9 +4,10 @@ const Register = require('../controllers/userApp/register')
 const Refresh = require('../controllers/userApp/refresh')
 const All = require('../controllers/userApp/all')
 const DumpAll = require('../controllers/userApp/dumpAll')
-const Dump = require('../controllers/userApp/dumpById')
+const Dump = require('../controllers/userApp/dump')
 const Logout = require('../controllers/userApp/logout')
  
+  //  registered all routes with given user app name
 
  function CreateUserRouter(appName){
 
@@ -20,7 +21,9 @@ const Logout = require('../controllers/userApp/logout')
     return router;
  }
 
+ // delete all user app routes 
  function DeleteUserRouter(appName){
+ // filter from stack and leave all non appName routes    
     router.stack = router.stack.filter((route)=>{
       if(new RegExp(appName).test(route.route.path)){
          return false;

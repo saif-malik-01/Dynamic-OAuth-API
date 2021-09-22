@@ -1,14 +1,20 @@
 const mongoose = require("mongoose");
-userDB = {};
+let userDB = {};
 
+// delete user collection by db name
 async function deleteDB(dbName){
   const result = await mongoose.model(`${dbName}`).collection.drop();
-  console.log(result);
+  // result is true if got deleted
+  if (result) {
+    console.log("USER DELETED");
+  } else {
+    console.log("UNEXPECTED ERROR");
+  }
 }
 
 
 
-
+// create schema with given name and return
 function createDB(dbName) {
   
   userDB[dbName] = mongoose.Schema({

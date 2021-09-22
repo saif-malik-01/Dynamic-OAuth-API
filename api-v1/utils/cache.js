@@ -10,7 +10,7 @@ const {promisify} = require('util');
  function create(appName,user,data){
   client.hset(appName,user,JSON.stringify([data]), (err,value)=>{
       if(err) console.log(err);
-      console.log("hset done",data);
+      console.log("hset done");
      
   })
 }

@@ -17,6 +17,8 @@ async function post(req,res){
            // compare hased store password and give one 
            if(bcrypt.compareSync(password,storeUserDetails.password)){
             const appIds = mongoose.model(`${req.originalUrl.split('/')[2]}`);
+
+            // find all doc in user app ame collection
             const profiles = await appIds.find({});
             return res.status(200).json({code:200,profiles});
            }else{

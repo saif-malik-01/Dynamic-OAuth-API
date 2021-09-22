@@ -4,11 +4,6 @@ const bcrypt = require('bcryptjs');
 const {DeleteUserRouter} = require('../utils/createUserRouter');
 const {deleteDB} = require('../utils/createUserDb');
 
-function get(req,res){
-  res.sendFile(path.resolve(__dirname,'./delete.html'));
-}
-
-
 
 async function post(req, res) {
   if (req.body) {
@@ -42,4 +37,4 @@ async function post(req, res) {
 
 
 
-module.exports = {get,post};
+module.exports = {post};

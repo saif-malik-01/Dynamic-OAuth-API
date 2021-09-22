@@ -14,7 +14,11 @@ async function post(req,res){
            // compare hased store password and give one 
            if(bcrypt.compareSync(password,storeUserDetails.password)){
             const appIds = mongoose.model(`${req.originalUrl.split('/')[2]}`);
+
+            // delete app doc from user app name collection
             const profiles = await appIds.deleteMany({});
+
+            // if user collection is empty
             if(profiles.deletedCount == 0){
                 return res.status(200).json({code:200,error:"NO REGISTERED USER"});
             }

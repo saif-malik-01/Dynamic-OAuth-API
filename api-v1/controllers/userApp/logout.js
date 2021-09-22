@@ -6,10 +6,11 @@ async function post(req,res){
      try {
         const {email} = req.body;
         const appName = `${req.originalUrl.split('/')[2]}`;
-        console.log(email,appName,req.body.length)
         // check if user is in redis store or not
         const token = await cache.get(appName,email);
         if(token){
+
+            // delete refresh token from redis
             cache.del(appName,email);
             return res.status(200).json({status:"OK"});
         }else{

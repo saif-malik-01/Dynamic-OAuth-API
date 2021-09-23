@@ -6,7 +6,8 @@ const All = require('../controllers/userApp/all')
 const DumpAll = require('../controllers/userApp/dumpAll')
 const Dump = require('../controllers/userApp/dump')
 const Logout = require('../controllers/userApp/logout')
- 
+const Verify = require('../controllers/userApp/verify') 
+
   //  registered all routes with given user app name
 
  function CreateUserRouter(appName){
@@ -18,6 +19,7 @@ const Logout = require('../controllers/userApp/logout')
     router.post(`/${appName}/dumpAll`,DumpAll.post);
     router.post(`/${appName}/dump`,Dump.post);
     router.post(`/${appName}/logout`,Logout.post);
+    router.post(`/${appName}/verify`,Verify.post);
     return router;
  }
 
